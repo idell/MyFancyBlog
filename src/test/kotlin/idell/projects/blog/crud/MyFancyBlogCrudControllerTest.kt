@@ -31,18 +31,13 @@ class MyFancyBlogCrudControllerTest {
     }
 
     @Test
-    fun `will answer 400 if the post is already present`() {
+    fun `will answer 400 if the post is longer than 1024 chars`() {
 
-        Mockito.`when`(blogCrudRequestAdapter.adapt(AN_ALREADY_PRESENT_POST_REQUEST))
-                .thenReturn(AN_ALREADY_PRESENT_POST_DOMAIN_REQUEST)
 
-        Mockito.`when`(blogPostUseCase.publish(AN_ALREADY_PRESENT_POST_DOMAIN_REQUEST))
-                .thenReturn(BlogPostAlreadyPresent("anUri"))
+        val actual: ResponseEntity<Any> = underTest.createPost("user", A_TOO_LONG_POST)
 
-        val actual: ResponseEntity<Any> = underTest.createPost("user", AN_ALREADY_PRESENT_POST_REQUEST)
-
-        Mockito.verify(blogPostUseCase, times(1)).publish(AN_ALREADY_PRESENT_POST_DOMAIN_REQUEST)
-        Assertions.assertThat(actual).isEqualTo(ResponseEntity.badRequest().body("anUri"))
+        Mockito.verifyNoInteractions(blogPostUseCase)
+        Assertions.assertThat(actual).isEqualTo(ResponseEntity.badRequest().build<Any>())
     }
 
     @Test
@@ -84,14 +79,8 @@ class MyFancyBlogCrudControllerTest {
                 "anImage",
                 "aCategory",
                 listOf("aTag", "anotherTag"))
-        private val AN_ALREADY_PRESENT_POST_REQUEST = BlogPostCreateRequest("anAlreadyPresentPost",
-                "some content",
-                "an author",
-                "anImage",
-                "a category",
-                listOf("a tag"))
-        private val AN_ALREADY_PRESENT_POST_DOMAIN_REQUEST = BlogPostDomainRequest("anAlreadyPresentPost",
-                "some content",
+        private val A_TOO_LONG_POST = BlogPostCreateRequest("anAlreadyPresentPost",
+                "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel",
                 "an author",
                 "anImage",
                 "a category",

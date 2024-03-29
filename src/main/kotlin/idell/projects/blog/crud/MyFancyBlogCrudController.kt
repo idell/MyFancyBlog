@@ -18,9 +18,12 @@ class MyFancyBlogCrudController(private val blogPostUseCase: BlogPostUseCase, pr
             return ResponseEntity(HttpStatus.UNAUTHORIZED)
         }
 
+        if (blogPostRequest.content.length > 1024){
+            return ResponseEntity.badRequest().build()
+        }
+
         return when (val blogPost = blogPostUseCase.publish(requestAdapter.adapt(blogPostRequest))) {
             is BlogPostCreated -> ResponseEntity.created(URI.create(blogPost.uri)).build()
-            is BlogPostAlreadyPresent -> ResponseEntity.badRequest().body(blogPost.uri)
             is BlogPostCreationError -> ResponseEntity.internalServerError().body(blogPost.error)
         }
     }
