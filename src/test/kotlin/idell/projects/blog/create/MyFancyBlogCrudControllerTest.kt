@@ -16,11 +16,13 @@ class MyFancyBlogCrudControllerTest {
     @Test
     fun `will answer 201 if the post has been created successfully`() {
 
-        val actual: ResponseEntity<Any> = underTest.createPost(BlogPost("a title"))
-        val expected = ResponseEntity.created(URI.create("")).build<Any>()
+        Mockito.`when`(blogPostUseCase.publish(BlogPostCreateRequest("aTitle")))
+                .thenReturn(BlogPostCreated("aUri"))
 
+        val actual: ResponseEntity<Any> = underTest.createPost(BlogPostCreateRequest("aTitle"))
+        val expected = ResponseEntity.created(URI.create("aUri")).build<Any>()
 
-        Mockito.verify(blogPostUseCase, times(1)).publish(any())
+        Mockito.verify(blogPostUseCase, times(1)).publish(BlogPostCreateRequest("aTitle"))
         Assertions.assertThat(actual).isEqualTo(expected)
     }
 }

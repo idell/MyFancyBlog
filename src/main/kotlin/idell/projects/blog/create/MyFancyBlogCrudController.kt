@@ -10,10 +10,12 @@ import java.net.URI
 class MyFancyBlogCrudController(private val blogPostUseCase: BlogPostUseCase) {
 
     @PostMapping("/v1/create/")
-    fun createPost(@RequestBody blogPost: BlogPost): ResponseEntity<Any> {
-        blogPostUseCase.publish(blogPost)
-        return ResponseEntity.created(URI.create("")).build()
+    fun createPost(@RequestBody blogPostRequest: BlogPostRequest): ResponseEntity<Any> {
+        when (val blogPost = blogPostUseCase.publish(blogPostRequest)) {
+            is BlogPostCreated -> return ResponseEntity.created(URI.create(blogPost.uri)).build()
+        }
     }
 }
 
-data class BlogPost(val title: String)
+sealed class BlogPostRequest
+data class BlogPostCreateRequest(val title: String) : BlogPostRequest()

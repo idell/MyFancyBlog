@@ -1,7 +1,7 @@
 package idell.projects.blog.create
 
 class BlogPostUseCase {
-    fun publish(any: Any) {
+    fun publish(blogPostRequest: BlogPostRequest) : BlogPostCreateResponse{
         TODO("Not yet implemented")
     }
 
