@@ -7,10 +7,11 @@ import org.springframework.web.bind.annotation.RestController
 import java.net.URI
 
 @RestController
-class MyFancyBlogCrudController {
+class MyFancyBlogCrudController(private val blogPostUseCase: BlogPostUseCase) {
 
     @PostMapping("/v1/create/")
     fun createPost(@RequestBody blogPost: BlogPost): ResponseEntity<Any> {
+        blogPostUseCase.publish(blogPost)
         return ResponseEntity.created(URI.create("")).build()
     }
 }
