@@ -25,4 +25,17 @@ class MyFancyBlogCrudControllerTest {
         Mockito.verify(blogPostUseCase, times(1)).publish(BlogPostCreateRequest("aTitle"))
         Assertions.assertThat(actual).isEqualTo(expected)
     }
+
+    @Test
+    fun `will answer 400 if the post is already present`() {
+
+        Mockito.`when`(blogPostUseCase.publish(BlogPostCreateRequest("anAlreadyPresentPost")))
+                .thenReturn(BlogPostAlreadyPresent)
+
+        val actual: ResponseEntity<Any> = underTest.createPost(BlogPostCreateRequest("anAlreadyPresentPost"))
+        val expected = ResponseEntity.badRequest().build<Any>()
+
+        Mockito.verify(blogPostUseCase, times(1)).publish(BlogPostCreateRequest("anAlreadyPresentPost"))
+        Assertions.assertThat(actual).isEqualTo(expected)
+    }
 }
