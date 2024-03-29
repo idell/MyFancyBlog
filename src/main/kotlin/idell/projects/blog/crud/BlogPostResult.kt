@@ -1,3 +1,3 @@
-package idell.projects.blog.create
+package idell.projects.blog.crud
 
 data class BlogPostResult(val postUri: String)

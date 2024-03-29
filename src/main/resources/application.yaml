@@ -3,3 +3,7 @@ server:
   port: 8090
   servlet:
     context-path: /my-fancy-blog
+
+controller:
+  enabled:
+    users: ["user", "admin"]

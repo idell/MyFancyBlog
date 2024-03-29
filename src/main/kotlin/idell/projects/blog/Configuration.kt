@@ -1,7 +1,7 @@
 package idell.projects.blog
 
-import idell.projects.blog.create.BlogPostRepository
-import idell.projects.blog.create.BlogPostUseCase
+import idell.projects.blog.crud.BlogPostRepository
+import idell.projects.blog.crud.BlogPostUseCase
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
