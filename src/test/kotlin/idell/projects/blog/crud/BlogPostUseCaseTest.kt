@@ -14,12 +14,12 @@ class BlogPostUseCaseTest {
     @Test
     fun `will invoke repository and answer with the uri if post has been created `() {
         Mockito.`when`(blogPostRepository.create(A_DOMAIN_REQUEST))
-                .thenReturn(BlogPostCreated(AN_URI))
+                .thenReturn(BlogPostCreated)
 
         val response: BlogPostCreateResponse = blogPostUseCase.publish(A_DOMAIN_REQUEST)
 
         Mockito.verify(blogPostRepository, times(1)).create(A_DOMAIN_REQUEST)
-        Assertions.assertThat(response).isEqualTo(BlogPostCreated(AN_URI))
+        Assertions.assertThat(response).isEqualTo(BlogPostCreated)
     }
 
     @Test

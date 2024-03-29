@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test
 import org.mockito.Mockito
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import java.net.URI
 
 class MyFancyBlogCrudControllerTest {
 
@@ -21,13 +20,12 @@ class MyFancyBlogCrudControllerTest {
                 .thenReturn(A_DOMAIN_REQUEST)
 
         Mockito.`when`(blogPostUseCase.publish(A_DOMAIN_REQUEST))
-                .thenReturn(BlogPostCreated("anUri"))
+                .thenReturn(BlogPostCreated)
 
         val actual = underTest.createPost("user", A_REQUEST)
-        val expected = ResponseEntity.created(URI.create("anUri")).build<Any>()
 
         Mockito.verify(blogPostUseCase, times(1)).publish(A_DOMAIN_REQUEST)
-        Assertions.assertThat(actual).isEqualTo(expected)
+        Assertions.assertThat(actual).isEqualTo(ResponseEntity.ok().build<Any>())
     }
 
     @Test
