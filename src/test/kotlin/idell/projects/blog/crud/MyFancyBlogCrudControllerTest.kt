@@ -40,10 +40,9 @@ class MyFancyBlogCrudControllerTest {
                 .thenReturn(BlogPostAlreadyPresent("anUri"))
 
         val actual: ResponseEntity<Any> = underTest.createPost("user", AN_ALREADY_PRESENT_POST_REQUEST)
-        val expected = ResponseEntity.badRequest().build<Any>()
 
         Mockito.verify(blogPostUseCase, times(1)).publish(AN_ALREADY_PRESENT_POST_DOMAIN_REQUEST)
-        Assertions.assertThat(actual).isEqualTo(expected)
+        Assertions.assertThat(actual).isEqualTo(ResponseEntity.badRequest().body("anUri"))
     }
 
     @Test
