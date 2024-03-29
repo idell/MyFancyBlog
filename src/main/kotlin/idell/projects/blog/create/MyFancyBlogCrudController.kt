@@ -12,7 +12,7 @@ import java.net.URI
 class MyFancyBlogCrudController(private val blogPostUseCase: BlogPostUseCase) {
 
     @PostMapping("/v1/create/")
-    fun createPost(@RequestHeader("X-User") user:String, @RequestBody blogPostRequest: BlogPostRequest): ResponseEntity<Any> {
+    fun createPost(@RequestHeader("X-User") user:String, @RequestBody blogPostRequest: BlogPostCreateRequest): ResponseEntity<Any> {
         if (!ENABLED_USERS.contains(user)){
             return ResponseEntity(HttpStatus.UNAUTHORIZED)
         }
@@ -28,5 +28,4 @@ class MyFancyBlogCrudController(private val blogPostUseCase: BlogPostUseCase) {
     }
 }
 
-sealed class BlogPostRequest
-data class BlogPostCreateRequest(val title: String) : BlogPostRequest()
+data class BlogPostCreateRequest(val title: String)
