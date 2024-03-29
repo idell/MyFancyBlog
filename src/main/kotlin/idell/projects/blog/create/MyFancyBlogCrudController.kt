@@ -20,6 +20,7 @@ class MyFancyBlogCrudController(private val blogPostUseCase: BlogPostUseCase) {
         return when (val blogPost = blogPostUseCase.publish(blogPostRequest)) {
             is BlogPostCreated -> ResponseEntity.created(URI.create(blogPost.uri)).build()
             is BlogPostAlreadyPresent -> ResponseEntity.badRequest().build()
+            is BlogPostCreationError -> ResponseEntity.internalServerError().body(blogPost.error)
         }
     }
 

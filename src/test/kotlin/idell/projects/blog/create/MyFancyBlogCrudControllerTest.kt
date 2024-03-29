@@ -29,13 +29,13 @@ class MyFancyBlogCrudControllerTest {
     @Test
     fun `will answer 400 if the post is already present`() {
 
-        Mockito.`when`(blogPostUseCase.publish(AN_ALREADY_PRESENT_REQUEST))
+        Mockito.`when`(blogPostUseCase.publish(AN_ALREADY_PRESENT_POST_REQUEST))
                 .thenReturn(BlogPostAlreadyPresent)
 
-        val actual: ResponseEntity<Any> = underTest.createPost("user", AN_ALREADY_PRESENT_REQUEST)
+        val actual: ResponseEntity<Any> = underTest.createPost("user", AN_ALREADY_PRESENT_POST_REQUEST)
         val expected = ResponseEntity.badRequest().build<Any>()
 
-        Mockito.verify(blogPostUseCase, times(1)).publish(AN_ALREADY_PRESENT_REQUEST)
+        Mockito.verify(blogPostUseCase, times(1)).publish(AN_ALREADY_PRESENT_POST_REQUEST)
         Assertions.assertThat(actual).isEqualTo(expected)
     }
 
@@ -48,6 +48,18 @@ class MyFancyBlogCrudControllerTest {
         Mockito.verifyNoInteractions(blogPostUseCase)
         Assertions.assertThat(actual).isEqualTo(expected)
     }
+    @Test
+    fun `will answer 500 if the usecase return an error`() {
+
+        Mockito.`when`(blogPostUseCase.publish(A_REQUEST))
+                .thenReturn(BlogPostCreationError("anErrorOccured"))
+
+        val actual: ResponseEntity<Any> = underTest.createPost("user", A_REQUEST)
+        val expected = ResponseEntity.internalServerError().body("anErrorOccured")
+
+        Mockito.verify(blogPostUseCase, times(1)).publish(A_REQUEST)
+        Assertions.assertThat(actual).isEqualTo(expected)
+    }
 
     companion object{
      private val A_REQUEST = BlogPostCreateRequest("aTitle",
@@ -56,11 +68,11 @@ class MyFancyBlogCrudControllerTest {
              "anImage",
              "aCategory",
              listOf("aTag", "anotherTag"))
+        private val AN_ALREADY_PRESENT_POST_REQUEST = BlogPostCreateRequest("anAlreadyPresentPost",
+                "some content",
+                "an author",
+                "anImage",
+                "a category",
+                listOf("a tag"))
     }
-    private val AN_ALREADY_PRESENT_REQUEST = BlogPostCreateRequest("anAlreadyPresentPost",
-            "some content",
-            "an author",
-            "anImage",
-            "a category",
-            listOf("a tag"))
 }

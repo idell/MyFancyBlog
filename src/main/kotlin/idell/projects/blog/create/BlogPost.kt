@@ -4,3 +4,5 @@ sealed class BlogPostCreateResponse
 data class BlogPostCreated(val uri: String) : BlogPostCreateResponse()
 
 data object BlogPostAlreadyPresent : BlogPostCreateResponse()
+
+data class BlogPostCreationError(val error:String) : BlogPostCreateResponse()
