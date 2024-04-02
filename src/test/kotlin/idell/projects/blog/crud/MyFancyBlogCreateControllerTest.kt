@@ -1,6 +1,7 @@
 package idell.projects.blog.crud
 
 import com.nhaarman.mockitokotlin2.times
+import idell.projects.blog.crud.common.MyFancyBlogUserAuthenticator
 import idell.projects.blog.crud.create.controller.BlogPostCreateRequest
 import idell.projects.blog.crud.create.controller.MyFancyBlogCreateController
 import idell.projects.blog.crud.create.usecase.BlogPostCreated
@@ -18,7 +19,7 @@ class MyFancyBlogCreateControllerTest {
 
     private val blogPostUseCase: BlogPostUseCase = Mockito.mock(BlogPostUseCase::class.java)
     private val blogCrudRequestAdapter: BlogCrudRequestAdapter = Mockito.mock(BlogCrudRequestAdapter::class.java)
-    private val underTest = MyFancyBlogCreateController(blogPostUseCase,blogCrudRequestAdapter)
+    private val underTest = MyFancyBlogCreateController(blogPostUseCase,blogCrudRequestAdapter, MyFancyBlogUserAuthenticator(listOf("user")))
 
     @Test
     fun `will answer 201 if the post has been created successfully`() {
