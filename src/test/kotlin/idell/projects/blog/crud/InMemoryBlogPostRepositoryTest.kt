@@ -26,32 +26,40 @@ class InMemoryBlogPostRepositoryTest {
     @Test
     fun `will retrieve a post by keys if is present`() {
         val inMemoryBlogPostRepository = InMemoryBlogPostRepository(mutableMapOf(Pair(A_PRESENT_POST_KEY, A_SAVED_POST)))
-        val actual = inMemoryBlogPostRepository.retrieve(A_PRESENT_POST_KEY)
-        Assertions.assertThat(actual).isEqualTo(listOf(A_SAVED_POST))
+        Assertions.assertThat(inMemoryBlogPostRepository.retrieve(A_PRESENT_POST_KEY)).isEqualTo(listOf(A_SAVED_POST))
     }
     @Test
     fun `will retrieve a post by title if is present`() {
         val inMemoryBlogPostRepository = InMemoryBlogPostRepository(mutableMapOf(Pair(A_PRESENT_POST_KEY, A_SAVED_POST)))
-        val actual = inMemoryBlogPostRepository.retrieve(A_PRESENT_POST_KEY_BY_TITLE)
-        Assertions.assertThat(actual).isEqualTo(listOf(A_SAVED_POST))
+        Assertions.assertThat(inMemoryBlogPostRepository.retrieve(A_PRESENT_POST_KEY_BY_TITLE)).isEqualTo(listOf(A_SAVED_POST))
     }
     @Test
     fun `will retrieve a post by category if is present`() {
         val inMemoryBlogPostRepository = InMemoryBlogPostRepository(mutableMapOf(Pair(A_PRESENT_POST_KEY, A_SAVED_POST)))
-        val actual = inMemoryBlogPostRepository.retrieve(A_PRESENT_POST_KEY_BY_CATEGORY)
-        Assertions.assertThat(actual).isEqualTo(listOf(A_SAVED_POST))
+        Assertions.assertThat(inMemoryBlogPostRepository.retrieve(A_PRESENT_POST_KEY_BY_CATEGORY)).isEqualTo(listOf(A_SAVED_POST))
     }
     @Test
     fun `will retrieve a post by tags if is present`() {
         val inMemoryBlogPostRepository = InMemoryBlogPostRepository(mutableMapOf(Pair(A_PRESENT_POST_KEY, A_SAVED_POST)))
-        val actual = inMemoryBlogPostRepository.retrieve(A_PRESENT_POST_KEY_BY_TAGS)
-        Assertions.assertThat(actual).isEqualTo(listOf(A_SAVED_POST))
+        Assertions.assertThat(inMemoryBlogPostRepository.retrieve(A_PRESENT_POST_KEY_BY_TAGS)).isEqualTo(listOf(A_SAVED_POST))
     }
     @Test
     fun `will return an empty result if nothing matches`() {
         val inMemoryBlogPostRepository = InMemoryBlogPostRepository(mutableMapOf(Pair(A_PRESENT_POST_KEY, A_SAVED_POST)))
-        val actual = inMemoryBlogPostRepository.retrieve(A_NOT_PRESENT_POST_KEY)
-        Assertions.assertThat(actual).isEqualTo(emptyList<BlogPost>())
+        Assertions.assertThat(inMemoryBlogPostRepository.retrieve(A_NOT_PRESENT_POST_KEY)).isEqualTo(emptyList<BlogPost>())
+    }
+
+    @Test
+    fun `will delete a post`() {
+        val inMemoryBlogPostRepository = InMemoryBlogPostRepository(mutableMapOf(Pair(A_PRESENT_POST_KEY, A_SAVED_POST)))
+
+        Assertions.assertThat(inMemoryBlogPostRepository.delete(A_SAVED_POST)).isEqualTo(A_SAVED_POST)
+    }
+    @Test
+    fun `will return null if post to delete has not been found`() {
+        val inMemoryBlogPostRepository = InMemoryBlogPostRepository(mutableMapOf(Pair(A_PRESENT_POST_KEY, A_SAVED_POST)))
+
+        Assertions.assertThat(inMemoryBlogPostRepository.delete(A_NOT_PRESENT_POST)).isNull()
     }
 
     companion object {
@@ -80,6 +88,12 @@ class InMemoryBlogPostRepositoryTest {
                 image = "anImage",
                 category = "aCategory",
                 tags = listOf("aTag","anotherTag"))
+        private val A_NOT_PRESENT_POST = BlogPost(title = "aNotPresentTitle",
+                content = "aNotPresentContent",
+                author = "aNotPresentAuthor",
+                image = "aNotPresentImage",
+                category = "aNotPresentCategory",
+                tags = listOf("aNotPresentTag","anotherNotPresentTag"))
 
 
     }
