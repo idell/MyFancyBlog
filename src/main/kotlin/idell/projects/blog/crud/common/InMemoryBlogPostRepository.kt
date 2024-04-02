@@ -30,6 +30,10 @@ class InMemoryBlogPostRepository(private val storage : MutableMap<BlogPostKey, B
 
     }
 
+    override fun delete(blogPost: BlogPost) {
+
+    }
+
 }
 
 

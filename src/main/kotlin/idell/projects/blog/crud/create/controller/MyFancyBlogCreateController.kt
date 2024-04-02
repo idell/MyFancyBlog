@@ -17,7 +17,7 @@ class MyFancyBlogCreateController(private val blogPostUseCase: BlogPostUseCase,
                                   private val requestAdapter: BlogCrudRequestAdapter,
                                   private val authenticator: MyFancyBlogUserAuthenticator) {
 
-    @PostMapping("/v1/create/")
+    @PostMapping("/v1/posts/create/")
     fun createPost(@RequestHeader("X-User") user:String,
                    @RequestBody blogPostRequest: BlogPostCreateRequest): ResponseEntity<Any> {
         if (!authenticator.isAUser(user)){

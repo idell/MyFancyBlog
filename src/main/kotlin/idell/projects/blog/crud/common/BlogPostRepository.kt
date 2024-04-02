@@ -8,5 +8,7 @@ interface BlogPostRepository {
 
     fun retrieve(blogPostKey: BlogPostKey) : List<BlogPost>
 
+    fun delete(blogPost: BlogPost)
+
 
 }
