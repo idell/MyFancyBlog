@@ -33,7 +33,10 @@ X-User: user
 ```
 ## - Retrieve
   Allows to retrieve a blog post, by its title, category or tags. Results could be 0...N, depending on the criteria and matching posts.
-Return empty result if no one parameter has been passed to the controller
+- Return 400 if no one parameter has been passed to the controller
+- Return 401 if user is not enabled
+- Return 404 if no post has been found matching the criteria
+- Return 200 with the retrieved posts found
 
 ```
 ```
