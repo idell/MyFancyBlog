@@ -1,17 +1,24 @@
 package idell.projects.blog.crud
 
 import com.nhaarman.mockitokotlin2.times
+import idell.projects.blog.crud.create.controller.BlogPostCreateRequest
+import idell.projects.blog.crud.create.controller.MyFancyBlogCreateController
+import idell.projects.blog.crud.create.usecase.BlogPostCreated
+import idell.projects.blog.crud.create.usecase.BlogPostCreationError
+import idell.projects.blog.crud.create.usecase.BlogPostUseCase
+import idell.projects.blog.crud.retrieve.controller.BlogCrudRequestAdapter
+import idell.projects.blog.crud.retrieve.usecase.BlogPost
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 
-class MyFancyBlogCrudControllerTest {
+class MyFancyBlogCreateControllerTest {
 
     private val blogPostUseCase: BlogPostUseCase = Mockito.mock(BlogPostUseCase::class.java)
     private val blogCrudRequestAdapter: BlogCrudRequestAdapter = Mockito.mock(BlogCrudRequestAdapter::class.java)
-    private val underTest = MyFancyBlogCrudController(blogPostUseCase,blogCrudRequestAdapter)
+    private val underTest = MyFancyBlogCreateController(blogPostUseCase,blogCrudRequestAdapter)
 
     @Test
     fun `will answer 201 if the post has been created successfully`() {
@@ -71,7 +78,7 @@ class MyFancyBlogCrudControllerTest {
                 "anImage",
                 "aCategory",
                 listOf("aTag", "anotherTag"))
-        private val A_DOMAIN_REQUEST = BlogPostDomainRequest("aTitle",
+        private val A_DOMAIN_REQUEST = BlogPost("aTitle",
                 "an amazong blog contente",
                 "anAuthor",
                 "anImage",

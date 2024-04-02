@@ -1,10 +1,12 @@
 package idell.projects.blog.crud
 
 import com.nhaarman.mockitokotlin2.times
+import idell.projects.blog.crud.common.BlogPostRepository
+import idell.projects.blog.crud.create.usecase.*
+import idell.projects.blog.crud.retrieve.usecase.BlogPost
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
-
 
 class BlogPostUseCaseTest {
     private val blogPostRepository = Mockito.mock(BlogPostRepository::class.java)
@@ -12,7 +14,7 @@ class BlogPostUseCaseTest {
     private val blogPostUseCase = BlogPostUseCase(blogPostRepository)
 
     @Test
-    fun `will invoke repository and answer with the uri if post has been created `() {
+    fun `will invoke repository and answer Created if post has been created `() {
         Mockito.`when`(blogPostRepository.create(A_DOMAIN_REQUEST))
                 .thenReturn(BlogPostCreated)
 
@@ -35,8 +37,7 @@ class BlogPostUseCaseTest {
     }
 
     companion object {
-        private const val AN_URI = "anUri"
-        private val A_DOMAIN_REQUEST = BlogPostDomainRequest("aTitle",
+        private val A_DOMAIN_REQUEST = BlogPost("aTitle",
                 "an amazing blog content",
                 "anAuthor",
                 "anImage",

@@ -1,5 +1,9 @@
-package idell.projects.blog.crud
+package idell.projects.blog.crud.create.controller
 
+import idell.projects.blog.crud.retrieve.controller.BlogCrudRequestAdapter
+import idell.projects.blog.crud.create.usecase.BlogPostCreated
+import idell.projects.blog.crud.create.usecase.BlogPostCreationError
+import idell.projects.blog.crud.create.usecase.BlogPostUseCase
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
@@ -8,7 +12,8 @@ import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-class MyFancyBlogCrudController(private val blogPostUseCase: BlogPostUseCase, private val requestAdapter:BlogCrudRequestAdapter) {
+class MyFancyBlogCreateController(private val blogPostUseCase: BlogPostUseCase,
+                                  private val requestAdapter: BlogCrudRequestAdapter) {
 
     @PostMapping("/v1/create/")
     fun createPost(@RequestHeader("X-User") user:String,
@@ -26,7 +31,6 @@ class MyFancyBlogCrudController(private val blogPostUseCase: BlogPostUseCase, pr
             is BlogPostCreationError -> ResponseEntity.internalServerError().body(blogPost.error)
         }
     }
-
     companion object{
         private val ENABLED_USERS = listOf("user","admin")
     }

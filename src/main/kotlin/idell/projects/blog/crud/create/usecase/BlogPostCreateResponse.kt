@@ -1,4 +1,4 @@
-package idell.projects.blog.crud
+package idell.projects.blog.crud.create.usecase
 
 sealed class BlogPostCreateResponse
 data object BlogPostCreated : BlogPostCreateResponse()
