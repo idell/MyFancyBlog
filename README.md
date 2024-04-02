@@ -42,8 +42,18 @@ X-User: user
 - Return 404 if no post has been found matching the criteria
 - Return 200 with the retrieved posts found
 
+
+
+## - Delete
+Allows to delete a found post, retrieved by its title, category or tags.
+
 ```
+DELETE http://localhost:8090/my-fancy-blog/v1/posts/?title=String
+X-User: admin
 ```
+- Return 401 if user is not enabled
+- Return 404 if the requested post has not been found
+- Return 204 if the requested post has been deleted
 
 ### Decisions
 
