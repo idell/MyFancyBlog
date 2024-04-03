@@ -101,7 +101,5 @@ class InMemoryBlogPostRepositoryTest {
                 image = "aNewImage",
                 category = "aNewCategory",
                 tags = listOf("aNewTag","anotherNewTag"))
-
-
     }
 }
