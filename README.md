@@ -5,8 +5,11 @@
 `mvn clean verify` will compile and execute all tests of the project
 
 ### - Run application from terminal
-
-`mvn spring-boot:run` will run the entire application on port 8090.
+#### - Run with docker
+ - `docker build -t idell/blog .`
+ - `docker run -p 8090:8090 idell/blog`
+### - Run with maven
+ - `mvn spring-boot:run` will run the entire application on port 8090.
 
 ## Operations
 
