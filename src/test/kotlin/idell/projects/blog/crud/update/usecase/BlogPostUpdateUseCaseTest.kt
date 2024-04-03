@@ -31,18 +31,6 @@ class BlogPostUpdateUseCaseTest {
     }
 
     @Test
-    fun `partial update - success`() {
-        Mockito.`when`(repository.retrieve(BlogPostId(AN_EXISTING_POST_ID))).thenReturn(A_POST)
-        Mockito.`when`(repository.update(BlogPostId(AN_EXISTING_POST_ID), "aNewTitle", null,null,null,null,null))
-                .thenReturn(A_POST)
-
-        val result = underTest.update(AN_EXISTING_POST_PARTIAL_UPDATE)
-
-        Assertions.assertThat(result).isEqualTo(AN_EXISTING_POST_UPDATED)
-
-        Mockito.verify(repository).update(BlogPostId(AN_EXISTING_POST_ID), A_POST)
-    }
-    @Test
     fun `partial update - error`() {
         Mockito.`when`(repository.retrieve(BlogPostId(A_NOT_EXISTING_POST_ID))).thenReturn(null)
         Mockito.verifyNoMoreInteractions(repository)

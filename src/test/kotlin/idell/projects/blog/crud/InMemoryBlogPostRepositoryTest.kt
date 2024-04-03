@@ -65,16 +65,17 @@ class InMemoryBlogPostRepositoryTest {
 
         Assertions.assertThat(inMemoryBlogPostRepository.delete(A_NOT_PRESENT_POST_ID)).isNull()
     }
+    @Test
+    fun `will fully update a post`() {
+        val inMemoryBlogPostRepository = InMemoryBlogPostRepository(mutableMapOf(Pair(A_PRESENT_POST_ID, A_SAVED_POST)))
+
+        Assertions.assertThat(inMemoryBlogPostRepository.update(A_PRESENT_POST_ID, AN_UPDATED_POST)).isEqualTo(AN_UPDATED_POST)
+    }
+
+
 
     companion object {
         private val A_SAVE_REQUEST = BlogPost(title = "aTitle",
-                content = "aContent",
-                author = "anAuthor",
-                image = "anImage",
-                category = "aCategory",
-                tags = listOf("aTag","anotherTag"))
-
-        private val ANOTHER_SAVE_REQUEST = BlogPost(title = "anotherTitle",
                 content = "aContent",
                 author = "anAuthor",
                 image = "anImage",
@@ -94,12 +95,18 @@ class InMemoryBlogPostRepositoryTest {
                 image = "anImage",
                 category = "aCategory",
                 tags = listOf("aTag","anotherTag"))
-        private val A_NOT_PRESENT_POST = BlogPost(title = "aNotPresentTitle",
-                content = "aNotPresentContent",
-                author = "aNotPresentAuthor",
-                image = "aNotPresentImage",
-                category = "aNotPresentCategory",
-                tags = listOf("aNotPresentTag","anotherNotPresentTag"))
+        private val A_PARTIALLY_UPDATED_SAVED_POST = BlogPost(title = "aNewTitle",
+                content = "aContent",
+                author = "anAuthor",
+                image = "anImage",
+                category = "aCategory",
+                tags = listOf("aTag","anotherTag"))
+        private val AN_UPDATED_POST = BlogPost(title = "aNewTitle",
+                content = "aNewContent",
+                author = "aNewAuthor",
+                image = "aNewImage",
+                category = "aNewCategory",
+                tags = listOf("aNewTag","anotherNewTag"))
 
 
     }

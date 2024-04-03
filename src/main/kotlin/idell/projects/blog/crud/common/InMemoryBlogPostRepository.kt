@@ -24,11 +24,8 @@ class InMemoryBlogPostRepository(private val storage: MutableMap<BlogPostId, Blo
             storage.remove(blogPostId)
 
     override fun update(blogPostId: BlogPostId,blogPost: BlogPost): BlogPost? {
-        TODO("Not yet implemented")
-    }
-
-    override fun update(blogPostId: BlogPostId, title: String?, content: String?, author: String?, image: String?, category: String?, tags: List<String>?): BlogPost? {
-        TODO("Not yet implemented")
+         storage.replace(blogPostId, blogPost) ?: return null
+        return blogPost
     }
 
 }
