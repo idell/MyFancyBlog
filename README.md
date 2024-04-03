@@ -31,12 +31,12 @@ X-User: user
 
 }
 ```
-## - Retrieve
+## - Search
 ````
 GET http://localhost:8090/my-fancy-blog/v1/posts/?title=String
 X-User: user
 ````
-  Allows to retrieve a blog post, by its title, category or tags. Results could be 0...N, depending on the criteria and matching posts.
+  Allows to search a blog post, by its title, category or tags. Results could be 0...N, depending on the criteria and matching posts.
 - Return 400 if no one parameter has been passed to the controller
 - Return 401 if user is not enabled
 - Return 404 if no post has been found matching the criteria
