@@ -7,10 +7,7 @@ import idell.projects.blog.crud.retrieve.usecase.BlogPost
 import idell.projects.blog.crud.retrieve.usecase.BlogPostSearchUseCase
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RequestHeader
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 class BlogRetrieveController(private val blogUserAuthenticator: BlogUserAuthenticator, private val blogPostSearchUseCase: BlogPostSearchUseCase) {
@@ -37,9 +34,9 @@ class BlogRetrieveController(private val blogUserAuthenticator: BlogUserAuthenti
         }
     }
 
-    @GetMapping("/v1/posts/")
+    @GetMapping("/v1/posts/{id}")
     fun retrieve(@RequestHeader("X-User") user: String,
-                 @RequestParam(required = false) id: Int): ResponseEntity<BlogPostRetrieveResponse> {
+                 @PathVariable(required = false) id: Int): ResponseEntity<BlogPostRetrieveResponse> {
         if (!blogUserAuthenticator.isAUser(user)) {
             return ResponseEntity(HttpStatus.UNAUTHORIZED)
         }

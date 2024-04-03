@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.*
 @RestController
 class BlogPostUpdateController(private val authenticator: BlogUserAuthenticator, private val blogPostUpdateUseCase: BlogPostUpdateUseCase) {
 
-    @PutMapping("/v1/posts/update/full")
+    @PutMapping("/v1/posts/{id}/update/full/")
     fun fullUpdate(@RequestHeader("X-User") user: String,
-                   @RequestParam(required = true) id: Int,
+                   @PathVariable(required = true) id: Int,
                    @RequestBody (required = true) blogPostRequest: BlogPostUpdateRequest): ResponseEntity<PostUpdateResponse> {
         if (!authenticator.isAUser(user)) {
             return ResponseEntity(HttpStatus.UNAUTHORIZED)
@@ -31,9 +31,9 @@ class BlogPostUpdateController(private val authenticator: BlogUserAuthenticator,
         }
 
     }
-    @PutMapping("/v1/posts/update/")
+    @PutMapping("/v1/posts/{id}/update/")
     fun partialUpdate(@RequestHeader("X-User") user: String,
-                   @RequestParam(required = true) id: Int,
+                   @PathVariable(required = true) id: Int,
                    @RequestParam (required = false) title: String?,
                    @RequestParam (required = false) content: String?,
                    @RequestParam (required = false) author: String?,
@@ -55,9 +55,9 @@ class BlogPostUpdateController(private val authenticator: BlogUserAuthenticator,
         }
 
     }
-    @PutMapping("/v1/posts/update-category/")
+    @PutMapping("/v1/posts/{id}/update-category/")
     fun categoryUpdate(@RequestHeader("X-User") user: String,
-                   @RequestParam (required = true) id: Int,
+                   @PathVariable (required = true) id: Int,
                    @RequestParam (required = true) category: String,
     ): ResponseEntity<PostUpdateResponse> {
         if (!authenticator.isAUser(user)) {

@@ -45,7 +45,7 @@ Allows to retrieve a post by its it.
 - Return `200` with the retrieved posts found
 
 ```
-GET http://localhost:8090/my-fancy-blog/v1/posts/?id=1
+GET http://localhost:8090/my-fancy-blog/v1/posts/{{id}}
 X-User: user
 ```
 
@@ -66,10 +66,10 @@ matching posts.
 
 ### - Delete
 
-Allows to delete a post by id.
+Allows to delete a post by {{id}}.
 
 ```
-DELETE http://localhost:8090/my-fancy-blog/v1/posts/?id=1
+DELETE http://localhost:8090/my-fancy-blog/v1/posts/{{id}}
 X-User: admin
 ```
 
@@ -80,8 +80,7 @@ X-User: admin
 ### - Update
 
 #### - Full Update
-
-Both the body and id (as query param) are mandatory
+Allows to update the blog post identified by {{id}} 
 
 - Return `401` if uses is unknown
 - Return `200` if post has been fully updated
@@ -89,7 +88,7 @@ Both the body and id (as query param) are mandatory
 - Return `500` if update goes in error
 
 ```
-PUT http://localhost:8090/my-fancy-blog/v1/posts/update/full?id=1
+PUT http://localhost:8090/my-fancy-blog/v1/posts/{{id}}/update/full/
 Content-Type: application/json
 X-User: user
 
@@ -118,21 +117,21 @@ Allows to update a blog post, specifying id as mandatory query param and all the
 - Return `500` if update goes in error
 
 ```
-PUT http://localhost:8090/my-fancy-blog/v1/posts/update/?id=1&title=Journey into the Quantum Realm: Exploring the Future of ChatGPT
+PUT http://localhost:8090/my-fancy-blog/v1/posts/{{id}}/update/?title=Journey into the Quantum Realm: Exploring the Future of ChatGPT
 Content-Type: application/json
 X-User: user
 ```
 
 #### - Category Update
 
-Allows to update the category of a blog post, specifying id and category as mandatory query params
+Allows to update the category of a blog post, specifying {{id}} and category
 
 - Return `401` if uses is unknown
 - Return `200` if category has been updated
 - Return `500` if update goes in error
 
 ```
-PUT http://localhost:8090/my-fancy-blog/v1/posts/update-category/?id=1&category=Cutting-Edge Technology
+PUT http://localhost:8090/my-fancy-blog/v1/posts/{{id}}/update-category/?category=Cutting-Edge Technology
 Content-Type: application/json
 X-User: admin
 ```

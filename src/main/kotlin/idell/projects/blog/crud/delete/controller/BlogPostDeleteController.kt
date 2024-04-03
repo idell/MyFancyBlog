@@ -8,16 +8,16 @@ import idell.projects.blog.crud.delete.usecase.PostDeleted
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestHeader
-import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
 class BlogPostDeleteController(private val authenticator: BlogUserAuthenticator, private val blogDeleteUseCase: BlogDeleteUseCase) {
 
-    @DeleteMapping("/v1/posts/")
+    @DeleteMapping("/v1/posts/{id}")
     fun delete(@RequestHeader("X-User") user: String,
-               @RequestParam(required = true) id: Int):ResponseEntity<Any>{
+               @PathVariable(required = true) id: Int):ResponseEntity<Any>{
 
         if (!authenticator.isAnAdmin(user)){
             return ResponseEntity(HttpStatus.UNAUTHORIZED)
