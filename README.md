@@ -142,4 +142,4 @@ X-User: admin
 - For sake of simplicity, the repository has implemented as an in memory map, with an interface, which allows to
   implement another repository to make the same operations with any kind of storage.
 - The operation to assign a category to a post, it was understood as a category update of a blog post.
-- All the operations can be made by `user`, DELETE operation is only allowed to `admin`
+- All the operations can be made by `user`, DELETE operation is only allowed to `admin` (any other user is not allowed to execute any operation)
