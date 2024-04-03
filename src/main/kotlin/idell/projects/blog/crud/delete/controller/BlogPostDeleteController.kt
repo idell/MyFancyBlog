@@ -1,7 +1,7 @@
 package idell.projects.blog.crud.delete.controller
 
 import idell.projects.blog.crud.common.BlogPostId
-import idell.projects.blog.crud.common.MyFancyBlogUserAuthenticator
+import idell.projects.blog.crud.common.BlogUserAuthenticator
 import idell.projects.blog.crud.delete.usecase.BlogDeleteUseCase
 import idell.projects.blog.crud.delete.usecase.NoPostDeleted
 import idell.projects.blog.crud.delete.usecase.PostDeleted
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-class BlogPostDeleteController(private val authenticator: MyFancyBlogUserAuthenticator, private val blogDeleteUseCase: BlogDeleteUseCase) {
+class BlogPostDeleteController(private val authenticator: BlogUserAuthenticator, private val blogDeleteUseCase: BlogDeleteUseCase) {
 
     @DeleteMapping("/v1/posts/")
     fun delete(@RequestHeader("X-User") user: String,

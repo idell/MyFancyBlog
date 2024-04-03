@@ -2,7 +2,7 @@ package idell.projects.blog.crud.retrieve.controller
 
 import idell.projects.blog.crud.common.BlogPostId
 import idell.projects.blog.crud.common.BlogPostKey
-import idell.projects.blog.crud.common.MyFancyBlogUserAuthenticator
+import idell.projects.blog.crud.common.BlogUserAuthenticator
 import idell.projects.blog.crud.retrieve.usecase.BlogPost
 import idell.projects.blog.crud.retrieve.usecase.BlogPostSearchUseCase
 import org.springframework.http.HttpStatus
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-class BlogRetrieveController(private val blogUserAuthenticator: MyFancyBlogUserAuthenticator, private val blogPostSearchUseCase: BlogPostSearchUseCase) {
+class BlogRetrieveController(private val blogUserAuthenticator: BlogUserAuthenticator, private val blogPostSearchUseCase: BlogPostSearchUseCase) {
 
     @GetMapping("/v1/posts/search/")
     fun search(@RequestHeader("X-User") user: String,

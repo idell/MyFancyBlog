@@ -2,7 +2,7 @@ package idell.projects.blog.crud.controller
 
 import idell.projects.blog.crud.common.BlogPostId
 import idell.projects.blog.crud.common.BlogPostKey
-import idell.projects.blog.crud.common.MyFancyBlogUserAuthenticator
+import idell.projects.blog.crud.common.BlogUserAuthenticator
 import idell.projects.blog.crud.retrieve.controller.BlogPostResponse
 import idell.projects.blog.crud.retrieve.controller.BlogPostRetrieveResponse
 import idell.projects.blog.crud.retrieve.controller.BlogPostsResponse
@@ -19,7 +19,7 @@ import org.springframework.http.ResponseEntity
 class BlogRetrieveControllerTest {
     private val blogPostSearchUseCase = Mockito.mock(BlogPostSearchUseCase::class.java)
 
-    private val underTest = BlogRetrieveController(MyFancyBlogUserAuthenticator(listOf("aUser")),blogPostSearchUseCase)
+    private val underTest = BlogRetrieveController(BlogUserAuthenticator(listOf("aUser")),blogPostSearchUseCase)
 
     @Test
     fun `search - will return 400 if user is not enabled`() {

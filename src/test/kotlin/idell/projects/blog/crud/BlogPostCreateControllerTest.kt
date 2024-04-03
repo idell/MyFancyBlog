@@ -1,9 +1,9 @@
 package idell.projects.blog.crud
 
 import com.nhaarman.mockitokotlin2.times
-import idell.projects.blog.crud.common.MyFancyBlogUserAuthenticator
+import idell.projects.blog.crud.common.BlogUserAuthenticator
+import idell.projects.blog.crud.create.controller.BlogPostCreateController
 import idell.projects.blog.crud.create.controller.BlogPostCreateRequest
-import idell.projects.blog.crud.create.controller.MyFancyBlogCreateController
 import idell.projects.blog.crud.create.usecase.BlogPostCreated
 import idell.projects.blog.crud.create.usecase.BlogPostCreationError
 import idell.projects.blog.crud.create.usecase.BlogPostUseCase
@@ -14,10 +14,10 @@ import org.mockito.Mockito
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 
-class MyFancyBlogCreateControllerTest {
+class BlogPostCreateControllerTest {
 
     private val blogPostUseCase: BlogPostUseCase = Mockito.mock(BlogPostUseCase::class.java)
-    private val underTest = MyFancyBlogCreateController(blogPostUseCase, MyFancyBlogUserAuthenticator(listOf("user")))
+    private val underTest = BlogPostCreateController(blogPostUseCase, BlogUserAuthenticator(listOf("user")))
 
     @Test
     fun `will answer 201 if the post has been created successfully`() {

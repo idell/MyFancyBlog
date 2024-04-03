@@ -1,7 +1,7 @@
 package idell.projects.blog.crud.delete.controller
 
 import idell.projects.blog.crud.common.BlogPostId
-import idell.projects.blog.crud.common.MyFancyBlogUserAuthenticator
+import idell.projects.blog.crud.common.BlogUserAuthenticator
 import idell.projects.blog.crud.delete.usecase.BlogDeleteUseCase
 import idell.projects.blog.crud.delete.usecase.PostDeleted
 import org.assertj.core.api.Assertions
@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity
 
 class BlogPostDeleteControllerTest {
     private val blogDeleteUseCase: BlogDeleteUseCase = Mockito.mock(BlogDeleteUseCase::class.java)
-    private val underTest = BlogPostDeleteController(MyFancyBlogUserAuthenticator(listOf("user", "admin")), blogDeleteUseCase)
+    private val underTest = BlogPostDeleteController(BlogUserAuthenticator(listOf("user", "admin")), blogDeleteUseCase)
 
     @Test
     fun `not authorized user`() {

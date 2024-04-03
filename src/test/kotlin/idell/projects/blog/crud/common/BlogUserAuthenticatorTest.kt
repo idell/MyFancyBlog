@@ -3,8 +3,8 @@ package idell.projects.blog.crud.common
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 
-class MyFancyBlogUserAuthenticatorTest{
-    private val underTest = MyFancyBlogUserAuthenticator(listOf("user", "admin"))
+class BlogUserAuthenticatorTest{
+    private val underTest = BlogUserAuthenticator(listOf("user", "admin"))
 
     @Test
     fun `is a user`() {

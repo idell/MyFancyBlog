@@ -1,8 +1,8 @@
 package idell.projects.blog
 
 import idell.projects.blog.crud.common.BlogPostRepository
+import idell.projects.blog.crud.common.BlogUserAuthenticator
 import idell.projects.blog.crud.common.InMemoryBlogPostRepository
-import idell.projects.blog.crud.common.MyFancyBlogUserAuthenticator
 import idell.projects.blog.crud.create.usecase.BlogPostUseCase
 import idell.projects.blog.crud.delete.usecase.BlogDeleteUseCase
 import idell.projects.blog.crud.retrieve.usecase.BlogPostSearchUseCase
@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Configuration
 open class Configuration {
 
     @Bean
-    open fun blogUserAuthenticator(): MyFancyBlogUserAuthenticator =  MyFancyBlogUserAuthenticator(listOf("user","admin"))
+    open fun blogUserAuthenticator(): BlogUserAuthenticator =  BlogUserAuthenticator(listOf("user","admin"))
     @Bean
     open fun blogPostRepository() : BlogPostRepository  =  InMemoryBlogPostRepository(mutableMapOf())
     @Bean

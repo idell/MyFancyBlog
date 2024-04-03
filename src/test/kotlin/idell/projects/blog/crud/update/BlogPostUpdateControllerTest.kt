@@ -1,7 +1,7 @@
 package idell.projects.blog.crud.update
 
 import idell.projects.blog.crud.common.BlogPostId
-import idell.projects.blog.crud.common.MyFancyBlogUserAuthenticator
+import idell.projects.blog.crud.common.BlogUserAuthenticator
 import idell.projects.blog.crud.update.controller.BlogPostUpdateController
 import idell.projects.blog.crud.update.controller.BlogPostUpdateController.BlogPostUpdateRequest
 import idell.projects.blog.crud.update.controller.PostUpdateSuccessResponse
@@ -14,7 +14,7 @@ import org.springframework.http.ResponseEntity
 
 
 class BlogPostUpdateControllerTest {
-    private val authenticator = MyFancyBlogUserAuthenticator(listOf("user"))
+    private val authenticator = BlogUserAuthenticator(listOf("user"))
     private val blogPostUpdateUseCase = Mockito.mock(BlogPostUpdateUseCase::class.java)
     private val underTest = BlogPostUpdateController(authenticator, blogPostUpdateUseCase)
 

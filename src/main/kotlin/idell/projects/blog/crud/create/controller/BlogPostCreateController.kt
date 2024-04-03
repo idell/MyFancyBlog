@@ -1,6 +1,7 @@
 package idell.projects.blog.crud.create.controller
 
-import idell.projects.blog.crud.common.MyFancyBlogUserAuthenticator
+import idell.projects.blog.crud.common.BlogUserAuthenticator
+import idell.projects.blog.crud.common.ContentRestriction.Companion.CONTENT_MAX_LENGTH
 import idell.projects.blog.crud.create.usecase.BlogPostCreated
 import idell.projects.blog.crud.create.usecase.BlogPostCreationError
 import idell.projects.blog.crud.create.usecase.BlogPostUseCase
@@ -13,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-class MyFancyBlogCreateController(private val blogPostUseCase: BlogPostUseCase,
-                                  private val authenticator: MyFancyBlogUserAuthenticator) {
+class BlogPostCreateController(private val blogPostUseCase: BlogPostUseCase,
+                               private val authenticator: BlogUserAuthenticator) {
 
     @PostMapping("/v1/posts/create/")
     fun createPost(@RequestHeader("X-User") user:String,
@@ -23,7 +24,7 @@ class MyFancyBlogCreateController(private val blogPostUseCase: BlogPostUseCase,
             return ResponseEntity(HttpStatus.UNAUTHORIZED)
         }
 
-        if (blogPostRequest.content.length > 1024){
+        if (blogPostRequest.content.length > CONTENT_MAX_LENGTH){
             return ResponseEntity.badRequest().build()
         }
 

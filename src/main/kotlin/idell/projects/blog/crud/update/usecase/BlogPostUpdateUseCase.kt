@@ -5,7 +5,6 @@ import idell.projects.blog.crud.retrieve.usecase.BlogPost
 
 class BlogPostUpdateUseCase(private val repository: BlogPostRepository) {
 
-
     fun update(blogPostUpdateRequest: BlogPostUpdateRequest): PostUpdateResult{
 
         return when(blogPostUpdateRequest){
@@ -24,22 +23,38 @@ class BlogPostUpdateUseCase(private val repository: BlogPostRepository) {
 
     private fun partialUpdate(blogPostUpdateRequest: BlogPostPartialUpdateRequest): PostUpdateResult {
         val previousPostVersion: BlogPost = repository.retrieve(blogPostUpdateRequest.postId) ?: return PostUpdateError
-        var title = previousPostVersion.title
-        if (blogPostUpdateRequest.title != null) {
-            title = blogPostUpdateRequest.title
+        var author = previousPostVersion.author
+        var image = previousPostVersion.image
+        var category = previousPostVersion.category
+        var tags = previousPostVersion.tags
+
+        if (blogPostUpdateRequest.author!=null){
+            author = blogPostUpdateRequest.author
         }
-        val content = blogPostUpdateRequest.content ?: previousPostVersion.content
-        val author = blogPostUpdateRequest.author ?: previousPostVersion.author
-        val image = blogPostUpdateRequest.image ?: previousPostVersion.image
-        val category = blogPostUpdateRequest.category ?: previousPostVersion.category
-        val tags = blogPostUpdateRequest.tags ?: previousPostVersion.tags
+        if (blogPostUpdateRequest.image!=null){
+            image=blogPostUpdateRequest.image
+        }
+        if (blogPostUpdateRequest.category!=null){
+            category=blogPostUpdateRequest.category
+        }
+        if (blogPostUpdateRequest.tags!=null){
+            tags=blogPostUpdateRequest.tags
+        }
+        val title=blogPostUpdateRequest.title?:previousPostVersion.title
+        val content = blogPostUpdateRequest.content?:previousPostVersion.title
         repository.update(blogPostUpdateRequest.postId, BlogPost(title, content, author, image, category, tags))
         return PostUpdateSuccess(title, content, author, image, category, tags)
 
     }
 
     private fun fullUpdate(blogPostUpdateRequest: BlogPostFullUpdateRequest): PostUpdateResult {
-        val result = repository.update(blogPostUpdateRequest.postId, BlogPost(blogPostUpdateRequest.title, blogPostUpdateRequest.content, blogPostUpdateRequest.author, blogPostUpdateRequest.image, blogPostUpdateRequest.category, blogPostUpdateRequest.tags))
+        val result = repository.update(blogPostUpdateRequest.postId,
+                BlogPost(blogPostUpdateRequest.title,
+                        blogPostUpdateRequest.content,
+                        blogPostUpdateRequest.author,
+                        blogPostUpdateRequest.image,
+                        blogPostUpdateRequest.category,
+                        blogPostUpdateRequest.tags))
         return if (result != null) {
             PostUpdateSuccess(result.title, result.content, result.author, result.image, result.category, result.tags)
         } else PostUpdateError

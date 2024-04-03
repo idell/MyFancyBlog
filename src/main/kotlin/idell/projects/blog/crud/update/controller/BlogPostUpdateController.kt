@@ -1,7 +1,8 @@
 package idell.projects.blog.crud.update.controller
 
 import idell.projects.blog.crud.common.BlogPostId
-import idell.projects.blog.crud.common.MyFancyBlogUserAuthenticator
+import idell.projects.blog.crud.common.BlogUserAuthenticator
+import idell.projects.blog.crud.common.ContentRestriction.Companion.CONTENT_MAX_LENGTH
 import idell.projects.blog.crud.update.usecase.*
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -9,7 +10,7 @@ import org.springframework.web.bind.annotation.*
 
 
 @RestController
-class BlogPostUpdateController(private val authenticator: MyFancyBlogUserAuthenticator, private val blogPostUpdateUseCase: BlogPostUpdateUseCase) {
+class BlogPostUpdateController(private val authenticator: BlogUserAuthenticator, private val blogPostUpdateUseCase: BlogPostUpdateUseCase) {
 
     @PutMapping("/v1/posts/update/full")
     fun fullUpdate(@RequestHeader("X-User") user: String,
@@ -72,9 +73,7 @@ class BlogPostUpdateController(private val authenticator: MyFancyBlogUserAuthent
 
     }
 
-    companion object{
-        private const val CONTENT_MAX_LENGTH = 1024
-    }
+
 
     private fun isTooLong(content: String) =
             content.length > CONTENT_MAX_LENGTH
