@@ -113,10 +113,8 @@ X-User: admin
 Allows to update the category of a blog post, specifying id and category as mandatory query params
 
 - Return 401 if uses is unknown
-- Return 200 if post has been fully updated
-- Return 400 if try to update full post but content is too long
+- Return 200 if category has been updated
 - Return 500 if update goes in error
-
 
 ```
 PUT http://localhost:8090/my-fancy-blog/v1/posts/update-category/?id=1&category=abc
