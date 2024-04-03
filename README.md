@@ -31,6 +31,18 @@ X-User: user
 
 }
 ```
+## - Retrieve (by id)
+Allows to retrieve a post by its it. 
+
+- Return 404 if no post has been found matching the given id
+- Return 200 with the retrieved posts found
+
+```
+GET http://localhost:8090/my-fancy-blog/v1/posts/?id=1
+X-User: user
+```
+
+
 ## - Search
 ````
 GET http://localhost:8090/my-fancy-blog/v1/posts/?title=String
@@ -41,7 +53,6 @@ X-User: user
 - Return 401 if user is not enabled
 - Return 404 if no post has been found matching the criteria
 - Return 200 with the retrieved posts found
-
 
 
 ## - Delete

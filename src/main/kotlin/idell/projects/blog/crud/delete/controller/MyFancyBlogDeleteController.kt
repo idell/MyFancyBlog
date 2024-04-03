@@ -17,13 +17,13 @@ class MyFancyBlogDeleteController(private val authenticator: MyFancyBlogUserAuth
 
     @DeleteMapping("/v1/posts/")
     fun delete(@RequestHeader("X-User") user: String,
-               @RequestParam(required = true) blogPostId: Int):ResponseEntity<Any>{
+               @RequestParam(required = true) id: Int):ResponseEntity<Any>{
 
         if (!authenticator.isAnAdmin(user)){
             return ResponseEntity(HttpStatus.UNAUTHORIZED)
         }
 
-        return when(blogDeleteUseCase.delete(BlogPostId(blogPostId))){
+        return when(blogDeleteUseCase.delete(BlogPostId(id))){
             is NoPostDeleted -> ResponseEntity.notFound().build()
             is PostDeleted -> ResponseEntity.noContent().build()
         }

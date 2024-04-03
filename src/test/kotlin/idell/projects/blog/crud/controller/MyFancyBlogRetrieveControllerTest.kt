@@ -22,14 +22,14 @@ class MyFancyBlogRetrieveControllerTest {
     private val underTest = MyFancyBlogRetrieveController(MyFancyBlogUserAuthenticator(listOf("aUser")),blogPostSearchUseCase)
 
     @Test
-    fun `will return 400 if user is not enabled`() {
+    fun `search - will return 400 if user is not enabled`() {
         val result = underTest.search("aNotEnabledUser", null, null, null)
         Mockito.verifyNoInteractions(blogPostSearchUseCase)
         Assertions.assertThat(result).isEqualTo(ResponseEntity<BlogPostRetrieveResponse>(HttpStatus.UNAUTHORIZED))
     }
 
     @Test
-    fun `will return 404 when no post has been found`() {
+    fun `search - will return 404 when no post has been found`() {
         `when`(blogPostSearchUseCase.search(A_REQUEST))
                 .thenReturn(emptyList())
         val retrieve: ResponseEntity<BlogPostRetrieveResponse> = underTest.search("aUser","aTitle", null, null)
@@ -37,20 +37,21 @@ class MyFancyBlogRetrieveControllerTest {
     }
 
     @Test
-    fun `will return a result when a post has been found`() {
+    fun `search - will return a 200 and the result when a post has been found`() {
         `when`(blogPostSearchUseCase.search(A_REQUEST))
                 .thenReturn(listOf(A_POST))
         val actual: ResponseEntity<BlogPostRetrieveResponse> = underTest.search("aUser","aTitle", null, null)
         Assertions.assertThat(actual).isEqualTo(ResponseEntity.ok().body(A_RESPONSE))
     }
     @Test
-    fun `will return a result when a post has been found 1`() {
+    fun `retrieve - will return 200 and the result when a post has been found`() {
         `when`(blogPostSearchUseCase.retrieve(A_POST_ID))
                 .thenReturn(A_POST)
         val actual: ResponseEntity<BlogPostRetrieveResponse> = underTest.retrieve("aUser", AN_ID)
         Assertions.assertThat(actual).isEqualTo(ResponseEntity.ok().body(A_RESPONSE))
-    }@Test
-    fun `will return 404 when a post by id could not be found`() {
+    }
+    @Test
+    fun `retrieve - will return 404 when a post by id could not be found`() {
         `when`(blogPostSearchUseCase.retrieve(A_POST_ID))
                 .thenReturn(null)
         val actual: ResponseEntity<BlogPostRetrieveResponse> = underTest.retrieve("aUser", AN_ID)
