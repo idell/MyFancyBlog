@@ -19,7 +19,7 @@ class MyFancyBlogUpdateController(private val authenticator: MyFancyBlogUserAuth
     @PutMapping("/v1/posts/update/full")
     fun update(@RequestHeader("X-User") user: String,
                @RequestParam(required = true) id: Int,
-               @RequestBody blogPostRequest: BlogPostUpdateRequest): ResponseEntity<Any> {
+               @RequestBody (required = true) blogPostRequest: BlogPostUpdateRequest): ResponseEntity<Any> {
         if (!authenticator.isAUser(user)) {
             return ResponseEntity(HttpStatus.UNAUTHORIZED)
         }
