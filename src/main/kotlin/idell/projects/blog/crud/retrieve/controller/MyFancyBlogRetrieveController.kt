@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 class MyFancyBlogRetrieveController(private val blogUserAuthenticator: MyFancyBlogUserAuthenticator, private val blogPostSearchUseCase: BlogPostSearchUseCase) {
 
-    @GetMapping("/v1/posts/")
+    @GetMapping("/v1/posts/search/")
     fun search(@RequestHeader("X-User") user: String,
                @RequestParam(required = false) title: String?,
                @RequestParam(required = false) category: String?,
