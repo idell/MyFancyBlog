@@ -33,12 +33,12 @@ class MyFancyBlogUpdateController(private val authenticator: MyFancyBlogUserAuth
     @PutMapping("/v1/posts/update/")
     fun partialUpdate(@RequestHeader("X-User") user: String,
                    @RequestParam(required = true) id: Int,
-                   @RequestBody (required = false) title: String?,
-                   @RequestBody (required = false) content: String?,
-                   @RequestBody (required = false) author: String?,
-                   @RequestBody (required = false) image: String?,
-                   @RequestBody (required = false) category: String?,
-                   @RequestBody (required = false) tags: List<String>?,
+                   @RequestParam (required = false) title: String?,
+                   @RequestParam (required = false) content: String?,
+                   @RequestParam (required = false) author: String?,
+                   @RequestParam (required = false) image: String?,
+                   @RequestParam (required = false) category: String?,
+                   @RequestParam (required = false) tags: List<String>?,
     ): ResponseEntity<PostUpdateResponse> {
         if (!authenticator.isAUser(user)) {
             return ResponseEntity(HttpStatus.UNAUTHORIZED)
@@ -56,8 +56,8 @@ class MyFancyBlogUpdateController(private val authenticator: MyFancyBlogUserAuth
     }
     @PutMapping("/v1/posts/update-category/")
     fun categoryUpdate(@RequestHeader("X-User") user: String,
-                   @RequestParam(required = true) id: Int,
-                   @RequestBody (required = true) category: String,
+                   @RequestParam (required = true) id: Int,
+                   @RequestParam (required = true) category: String,
     ): ResponseEntity<PostUpdateResponse> {
         if (!authenticator.isAUser(user)) {
             return ResponseEntity(HttpStatus.UNAUTHORIZED)

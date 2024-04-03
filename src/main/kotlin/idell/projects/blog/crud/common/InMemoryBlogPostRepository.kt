@@ -14,8 +14,8 @@ class InMemoryBlogPostRepository(private val storage: MutableMap<BlogPostId, Blo
 
     override fun search(blogPostKey: BlogPostKey): List<BlogPost> {
         val mapValues: Map<BlogPostId, BlogPostKey> = storage.mapValues { BlogPostKey(it.value.title, it.value.category, it.value.tags) }
-        val allParamtersMatch2: List<BlogPostId> = mapValues.filter { it.value.title == blogPostKey.title || it.value.category == blogPostKey.category || it.value.tags == blogPostKey.tags }.keys.toList().distinct()
-        return allParamtersMatch2.mapNotNull { storage[it] }
+        val allParametersMatch: List<BlogPostId> = mapValues.filter { it.value.title == blogPostKey.title || it.value.category == blogPostKey.category || it.value.tags == blogPostKey.tags }.keys.toList().distinct()
+        return allParametersMatch.mapNotNull { storage[it] }
     }
 
     override fun retrieve(blogPostId: BlogPostId): BlogPost? = storage[blogPostId]

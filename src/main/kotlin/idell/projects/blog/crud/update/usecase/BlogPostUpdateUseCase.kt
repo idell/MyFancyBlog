@@ -24,7 +24,10 @@ class BlogPostUpdateUseCase(private val repository: BlogPostRepository) {
 
     private fun partialUpdate(blogPostUpdateRequest: BlogPostPartialUpdateRequest): PostUpdateResult {
         val previousPostVersion: BlogPost = repository.retrieve(blogPostUpdateRequest.postId) ?: return PostUpdateError
-        val title = blogPostUpdateRequest.title ?: previousPostVersion.title
+        var title = previousPostVersion.title
+        if (blogPostUpdateRequest.title != null) {
+            title = blogPostUpdateRequest.title
+        }
         val content = blogPostUpdateRequest.content ?: previousPostVersion.content
         val author = blogPostUpdateRequest.author ?: previousPostVersion.author
         val image = blogPostUpdateRequest.image ?: previousPostVersion.image
