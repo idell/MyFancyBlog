@@ -95,12 +95,6 @@ class InMemoryBlogPostRepositoryTest {
                 image = "anImage",
                 category = "aCategory",
                 tags = listOf("aTag","anotherTag"))
-        private val A_PARTIALLY_UPDATED_SAVED_POST = BlogPost(title = "aNewTitle",
-                content = "aContent",
-                author = "anAuthor",
-                image = "anImage",
-                category = "aCategory",
-                tags = listOf("aTag","anotherTag"))
         private val AN_UPDATED_POST = BlogPost(title = "aNewTitle",
                 content = "aNewContent",
                 author = "aNewAuthor",
