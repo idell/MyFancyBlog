@@ -10,4 +10,12 @@ interface BlogPostRepository {
     fun retrieve(blogPostId: BlogPostId) : BlogPost?
 
     fun delete(blogPostId: BlogPostId): BlogPost?
+    fun update(blogPostId: BlogPostId, blogPost: BlogPost) : BlogPost?
+    fun update(blogPostId: BlogPostId,
+               title: String?,
+               content: String?,
+               author: String?,
+               image: String?,
+               category: String?,
+               tags: List<String>?) : BlogPost?
 }

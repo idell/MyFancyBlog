@@ -31,7 +31,6 @@ class MyFancyBlogUpdateController(private val authenticator: MyFancyBlogUserAuth
 
         return when (updateResult){
             is PostUpdateSuccess ->  ResponseEntity.ok(PostUpdateSuccessResponse(updateResult.title,updateResult.content,updateResult.author,updateResult.image,updateResult.category,updateResult.tags))
-            is PostNotFound -> ResponseEntity.notFound().build()
             is PostUpdateError -> ResponseEntity.internalServerError().build()
         }
 
@@ -56,7 +55,6 @@ class MyFancyBlogUpdateController(private val authenticator: MyFancyBlogUserAuth
 
         return when (updateResult){
             is PostUpdateSuccess ->  ResponseEntity.ok(PostUpdateSuccessResponse(updateResult.title,updateResult.content,updateResult.author,updateResult.image,updateResult.category,updateResult.tags))
-            is PostNotFound -> ResponseEntity.notFound().build()
             is PostUpdateError -> ResponseEntity.internalServerError().build()
         }
 

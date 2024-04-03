@@ -43,15 +43,7 @@ class MyFancyBlogUpdateControllerTest {
         Mockito.verifyNoInteractions(blogPostUpdateUseCase)
         Assertions.assertThat(actual).isEqualTo(ResponseEntity.badRequest().build<Any>())
     }
-    @Test
-    fun `full update - will return 404 if try to update a not existing post`() {
-        Mockito.`when`(blogPostUpdateUseCase.update(A_NOT_EXISTING_POST_FULL_UPDATE_REQUEST)).thenReturn(PostNotFound)
 
-        val actual = underTest.fullUpdate("user", A_NOT_EXISTING_POST_ID, A_POST_UPDATE)
-
-        Mockito.verify(blogPostUpdateUseCase).update(A_NOT_EXISTING_POST_FULL_UPDATE_REQUEST)
-        Assertions.assertThat(actual).isEqualTo(ResponseEntity.notFound().build<Any>())
-    }
     @Test
     fun `full update - will return 500 if update goes in error`() {
         Mockito.`when`(blogPostUpdateUseCase.update(A_NOT_EXISTING_POST_FULL_UPDATE_REQUEST)).thenReturn(PostUpdateError)
@@ -85,15 +77,7 @@ class MyFancyBlogUpdateControllerTest {
         Mockito.verifyNoInteractions(blogPostUpdateUseCase)
         Assertions.assertThat(actual).isEqualTo(ResponseEntity.badRequest().build<Any>())
     }
-    @Test
-    fun `partial update - will return 404 if try to update a not existing post`() {
-        Mockito.`when`(blogPostUpdateUseCase.update(A_NOT_EXISTING_PARTIAL_UPDATE_REQUEST)).thenReturn(PostNotFound)
 
-        val actual = underTest.partialUpdate("user", A_NOT_EXISTING_POST_ID,null,null,null,null,null, null)
-
-        Mockito.verify(blogPostUpdateUseCase).update(A_NOT_EXISTING_PARTIAL_UPDATE_REQUEST)
-        Assertions.assertThat(actual).isEqualTo(ResponseEntity.notFound().build<Any>())
-    }
     @Test
     fun `partial update - will return 500 if update goes in error`() {
         Mockito.`when`(blogPostUpdateUseCase.update(A_NOT_EXISTING_PARTIAL_UPDATE_REQUEST)).thenReturn(PostUpdateError)
