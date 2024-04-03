@@ -120,7 +120,7 @@ Allows to update a blog post, specifying id as mandatory query param and all the
 ```
 PUT http://localhost:8090/my-fancy-blog/v1/posts/update/?id=1&title=Journey into the Quantum Realm: Exploring the Future of ChatGPT
 Content-Type: application/json
-X-User: admin
+X-User: user
 ```
 
 #### - Category Update
@@ -142,3 +142,4 @@ X-User: admin
 - For sake of simplicity, the repository has implemented as an in memory map, with an interface, which allows to
   implement another repository to make the same operations with any kind of storage.
 - The operation to assign a category to a post, it was understood as a category update of a blog post.
+- All the operations can be made by `user`, DELETE operation is only allowed to `admin`
