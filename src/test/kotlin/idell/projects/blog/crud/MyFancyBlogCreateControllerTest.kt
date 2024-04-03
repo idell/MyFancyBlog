@@ -7,7 +7,6 @@ import idell.projects.blog.crud.create.controller.MyFancyBlogCreateController
 import idell.projects.blog.crud.create.usecase.BlogPostCreated
 import idell.projects.blog.crud.create.usecase.BlogPostCreationError
 import idell.projects.blog.crud.create.usecase.BlogPostUseCase
-import idell.projects.blog.crud.retrieve.controller.BlogCrudRequestAdapter
 import idell.projects.blog.crud.retrieve.usecase.BlogPost
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
@@ -18,14 +17,10 @@ import org.springframework.http.ResponseEntity
 class MyFancyBlogCreateControllerTest {
 
     private val blogPostUseCase: BlogPostUseCase = Mockito.mock(BlogPostUseCase::class.java)
-    private val blogCrudRequestAdapter: BlogCrudRequestAdapter = Mockito.mock(BlogCrudRequestAdapter::class.java)
-    private val underTest = MyFancyBlogCreateController(blogPostUseCase,blogCrudRequestAdapter, MyFancyBlogUserAuthenticator(listOf("user")))
+    private val underTest = MyFancyBlogCreateController(blogPostUseCase, MyFancyBlogUserAuthenticator(listOf("user")))
 
     @Test
     fun `will answer 201 if the post has been created successfully`() {
-
-        Mockito.`when`(blogCrudRequestAdapter.adapt(A_REQUEST))
-                .thenReturn(A_DOMAIN_REQUEST)
 
         Mockito.`when`(blogPostUseCase.publish(A_DOMAIN_REQUEST))
                 .thenReturn(BlogPostCreated)
@@ -52,16 +47,12 @@ class MyFancyBlogCreateControllerTest {
         val actual: ResponseEntity<Any> = underTest.createPost("aNotAuthorizedUser", A_REQUEST)
 
         Mockito.verifyNoInteractions(blogPostUseCase)
-        Mockito.verifyNoInteractions(blogCrudRequestAdapter)
 
         Assertions.assertThat(actual).isEqualTo(ResponseEntity<HttpStatus>(HttpStatus.UNAUTHORIZED))
     }
 
     @Test
     fun `will answer 500 if the usecase return an error`() {
-
-        Mockito.`when`(blogCrudRequestAdapter.adapt(A_REQUEST))
-                .thenReturn(A_DOMAIN_REQUEST)
 
         Mockito.`when`(blogPostUseCase.publish(A_DOMAIN_REQUEST))
                 .thenReturn(BlogPostCreationError("anErrorOccured"))

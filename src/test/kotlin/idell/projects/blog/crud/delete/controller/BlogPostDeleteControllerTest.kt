@@ -10,9 +10,9 @@ import org.mockito.Mockito
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 
-class MyFancyBlogDeleteControllerTest {
+class BlogPostDeleteControllerTest {
     private val blogDeleteUseCase: BlogDeleteUseCase = Mockito.mock(BlogDeleteUseCase::class.java)
-    private val underTest = MyFancyBlogDeleteController(MyFancyBlogUserAuthenticator(listOf("user", "admin")), blogDeleteUseCase)
+    private val underTest = BlogPostDeleteController(MyFancyBlogUserAuthenticator(listOf("user", "admin")), blogDeleteUseCase)
 
     @Test
     fun `not authorized user`() {

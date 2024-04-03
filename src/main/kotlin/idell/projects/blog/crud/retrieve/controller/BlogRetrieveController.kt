@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-class MyFancyBlogRetrieveController(private val blogUserAuthenticator: MyFancyBlogUserAuthenticator, private val blogPostSearchUseCase: BlogPostSearchUseCase) {
+class BlogRetrieveController(private val blogUserAuthenticator: MyFancyBlogUserAuthenticator, private val blogPostSearchUseCase: BlogPostSearchUseCase) {
 
     @GetMapping("/v1/posts/search/")
     fun search(@RequestHeader("X-User") user: String,

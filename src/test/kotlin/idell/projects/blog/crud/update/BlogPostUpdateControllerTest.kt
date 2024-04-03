@@ -2,8 +2,8 @@ package idell.projects.blog.crud.update
 
 import idell.projects.blog.crud.common.BlogPostId
 import idell.projects.blog.crud.common.MyFancyBlogUserAuthenticator
-import idell.projects.blog.crud.update.controller.MyFancyBlogUpdateController
-import idell.projects.blog.crud.update.controller.MyFancyBlogUpdateController.BlogPostUpdateRequest
+import idell.projects.blog.crud.update.controller.BlogPostUpdateController
+import idell.projects.blog.crud.update.controller.BlogPostUpdateController.BlogPostUpdateRequest
 import idell.projects.blog.crud.update.controller.PostUpdateSuccessResponse
 import idell.projects.blog.crud.update.usecase.*
 import org.assertj.core.api.Assertions
@@ -13,10 +13,10 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 
 
-class MyFancyBlogUpdateControllerTest {
+class BlogPostUpdateControllerTest {
     private val authenticator = MyFancyBlogUserAuthenticator(listOf("user"))
     private val blogPostUpdateUseCase = Mockito.mock(BlogPostUpdateUseCase::class.java)
-    private val underTest = MyFancyBlogUpdateController(authenticator, blogPostUpdateUseCase)
+    private val underTest = BlogPostUpdateController(authenticator, blogPostUpdateUseCase)
 
     @Test
     fun `full update - will return 401 if uses is unknown`() {

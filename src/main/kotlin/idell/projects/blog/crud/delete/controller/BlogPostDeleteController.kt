@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-class MyFancyBlogDeleteController(private val authenticator: MyFancyBlogUserAuthenticator, private val blogDeleteUseCase: BlogDeleteUseCase) {
+class BlogPostDeleteController(private val authenticator: MyFancyBlogUserAuthenticator, private val blogDeleteUseCase: BlogDeleteUseCase) {
 
     @DeleteMapping("/v1/posts/")
     fun delete(@RequestHeader("X-User") user: String,

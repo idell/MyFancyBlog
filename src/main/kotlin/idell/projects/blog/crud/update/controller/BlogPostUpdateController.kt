@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*
 
 
 @RestController
-class MyFancyBlogUpdateController(private val authenticator: MyFancyBlogUserAuthenticator, private val blogPostUpdateUseCase: BlogPostUpdateUseCase) {
+class BlogPostUpdateController(private val authenticator: MyFancyBlogUserAuthenticator, private val blogPostUpdateUseCase: BlogPostUpdateUseCase) {
 
     @PutMapping("/v1/posts/update/full")
     fun fullUpdate(@RequestHeader("X-User") user: String,

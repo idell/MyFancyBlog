@@ -6,7 +6,7 @@ import idell.projects.blog.crud.common.MyFancyBlogUserAuthenticator
 import idell.projects.blog.crud.retrieve.controller.BlogPostResponse
 import idell.projects.blog.crud.retrieve.controller.BlogPostRetrieveResponse
 import idell.projects.blog.crud.retrieve.controller.BlogPostsResponse
-import idell.projects.blog.crud.retrieve.controller.MyFancyBlogRetrieveController
+import idell.projects.blog.crud.retrieve.controller.BlogRetrieveController
 import idell.projects.blog.crud.retrieve.usecase.BlogPost
 import idell.projects.blog.crud.retrieve.usecase.BlogPostSearchUseCase
 import org.assertj.core.api.Assertions
@@ -16,10 +16,10 @@ import org.mockito.Mockito.`when`
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 
-class MyFancyBlogRetrieveControllerTest {
+class BlogRetrieveControllerTest {
     private val blogPostSearchUseCase = Mockito.mock(BlogPostSearchUseCase::class.java)
 
-    private val underTest = MyFancyBlogRetrieveController(MyFancyBlogUserAuthenticator(listOf("aUser")),blogPostSearchUseCase)
+    private val underTest = BlogRetrieveController(MyFancyBlogUserAuthenticator(listOf("aUser")),blogPostSearchUseCase)
 
     @Test
     fun `search - will return 400 if user is not enabled`() {

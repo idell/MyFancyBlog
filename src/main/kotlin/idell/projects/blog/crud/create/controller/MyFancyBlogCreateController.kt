@@ -1,10 +1,10 @@
 package idell.projects.blog.crud.create.controller
 
 import idell.projects.blog.crud.common.MyFancyBlogUserAuthenticator
-import idell.projects.blog.crud.retrieve.controller.BlogCrudRequestAdapter
 import idell.projects.blog.crud.create.usecase.BlogPostCreated
 import idell.projects.blog.crud.create.usecase.BlogPostCreationError
 import idell.projects.blog.crud.create.usecase.BlogPostUseCase
+import idell.projects.blog.crud.retrieve.usecase.BlogPost
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 class MyFancyBlogCreateController(private val blogPostUseCase: BlogPostUseCase,
-                                  private val requestAdapter: BlogCrudRequestAdapter,
                                   private val authenticator: MyFancyBlogUserAuthenticator) {
 
     @PostMapping("/v1/posts/create/")
@@ -28,7 +27,9 @@ class MyFancyBlogCreateController(private val blogPostUseCase: BlogPostUseCase,
             return ResponseEntity.badRequest().build()
         }
 
-        return when (val blogPost = blogPostUseCase.publish(requestAdapter.adapt(blogPostRequest))) {
+        return when (val blogPost = blogPostUseCase.publish(BlogPost(title = blogPostRequest.title,
+                content = blogPostRequest.content, author = blogPostRequest.author, image = blogPostRequest.image,
+                category = blogPostRequest.category, tags = blogPostRequest.tags))) {
             is BlogPostCreated -> ResponseEntity.ok().build()
             is BlogPostCreationError -> ResponseEntity.internalServerError().body(blogPost.error)
         }
