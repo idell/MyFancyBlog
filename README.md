@@ -56,18 +56,77 @@ X-User: user
 
 
 ## - Delete
-Allows to delete a found post, retrieved by its title, category or tags.
+Allows to delete a post by id.
 
 ```
-DELETE http://localhost:8090/my-fancy-blog/v1/posts/?title=String
+DELETE http://localhost:8090/my-fancy-blog/v1/posts/?id=1
 X-User: admin
 ```
 - Return 401 if user is not enabled
 - Return 404 if the requested post has not been found
 - Return 204 if the requested post has been deleted
 
+## - Update
+### - Full Update
+Both the body and id (as query param) are mandatory
+
+- Return 401 if uses is unknown
+- Return 200 if post has been fully updated
+- Return 400 if try to update full post but content is too long
+- Return 500 if update goes in error
+
+```
+PUT http://localhost:8090/my-fancy-blog/v1/posts/update/full?id=1
+Content-Type: application/json
+X-User: user
+
+{
+  "title": "digit",
+  "content": "One morning, when Gregor Samsa woke from troubled dreams",
+  "author": "String",
+  "image": "picasso",
+  "category": "String",
+  "tags": [
+    "nostring",
+    "somestring2"
+  ]
+}
+```
+
+### - Partial Update 
+Allows to update a blog post, specifying id as mandatory query param and all the other fields are optional
+(title: String, content: String, author: String, image: String, category: String, tags: List<String>)
+
+- Return 401 if uses is unknown
+- Return 200 if post has been fully updated
+- Return 400 if try to update full post but content is too long
+- Return 500 if update goes in error
+
+
+```
+PUT http://localhost:8090/my-fancy-blog/v1/posts/update-category/?id=1&category=abc
+Content-Type: application/json
+X-User: admin
+```
+
+### - Category Update
+Allows to update the category of a blog post, specifying id and category as mandatory query params
+
+- Return 401 if uses is unknown
+- Return 200 if post has been fully updated
+- Return 400 if try to update full post but content is too long
+- Return 500 if update goes in error
+
+
+```
+PUT http://localhost:8090/my-fancy-blog/v1/posts/update-category/?id=1&category=abc
+Content-Type: application/json
+X-User: admin
+```
+
 ### Decisions
 
-- For sake of simplicity, the repository has implemented as an in memory map, with an interface, which allows to implement another repository to make the same operations with any kind of storage. 
+- For sake of simplicity, the repository has implemented as an in memory map, with an interface, which allows to implement another repository to make the same operations with any kind of storage.
+- The operation to assign a category to a post, it was understood as a category update of a blog post.
 
 

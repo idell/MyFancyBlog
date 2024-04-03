@@ -95,6 +95,13 @@ class MyFancyBlogUpdateControllerTest {
         Assertions.assertThat(actual).isEqualTo(ResponseEntity.ok(AN_EXISTING_POST_WITH_UPDATED_CATEGORY_RESPONSE))
     }
     @Test
+    fun `category update - will return 401 if user is unknown`() {
+
+        val actual = underTest.categoryUpdate("an-unknown-user", AN_EXISTING_POST_ID,  "aNewCategory")
+
+        Assertions.assertThat(actual).isEqualTo(ResponseEntity<Any>(HttpStatus.UNAUTHORIZED))
+    }
+    @Test
     fun `category update - will return 500 if update goes in error`() {
         Mockito.`when`(blogPostUpdateUseCase.update(AN_EXISTING_POST_CATEGORY_UPDATE_REQUEST)).thenReturn(AN_EXISTING_POST_CATEGORY_UPDATED)
 
