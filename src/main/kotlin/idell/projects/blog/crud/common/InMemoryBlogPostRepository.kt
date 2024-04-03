@@ -1,13 +1,15 @@
 package idell.projects.blog.crud.common
 
-import idell.projects.blog.crud.create.usecase.*
+import idell.projects.blog.crud.create.usecase.BlogPostCreateResponse
+import idell.projects.blog.crud.create.usecase.BlogPostCreated
 import idell.projects.blog.crud.retrieve.usecase.BlogPost
+import java.util.*
 
 class InMemoryBlogPostRepository(private val storage: MutableMap<BlogPostId, BlogPost>) : BlogPostRepository {
 
     override fun create(blogPost: BlogPost): BlogPostCreateResponse {
-            val lastId = storage.keys.stream().mapToInt { it.id }.max()
-            storage[BlogPostId(lastId.orElse(1))] = blogPost
+            val lastId: OptionalInt = storage.keys.stream().mapToInt { it.id }.max()
+            storage[BlogPostId(lastId.orElse(0).plus(1))] = blogPost
             return BlogPostCreated
 
     }
