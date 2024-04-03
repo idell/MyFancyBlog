@@ -38,6 +38,25 @@ class BlogPostUpdateUseCaseTest {
 
         Assertions.assertThat(result).isEqualTo(PostUpdateError)
     }
+    @Test
+    fun `category update - success`() {
+        Mockito.`when`(repository.retrieve(BlogPostId(AN_EXISTING_POST_ID))).thenReturn(A_POST)
+        Mockito.`when`(repository.update(BlogPostId(AN_EXISTING_POST_ID), A_POST_WITH_NEW_CATEGORY)).thenReturn(A_POST_WITH_NEW_CATEGORY)
+        val result = underTest.update(AN_EXISTING_POST_CATEGORY_UPDATE_REQUEST)
+
+        Assertions.assertThat(result).isEqualTo(AN_EXISTING_POST_WITH_CATEGORY_UPDATED)
+
+        Mockito.verify(repository).update(BlogPostId(AN_EXISTING_POST_ID), A_POST_WITH_NEW_CATEGORY)
+    }
+    @Test
+    fun `category update - error`() {
+        Mockito.`when`(repository.retrieve(BlogPostId(A_NOT_EXISTING_POST_ID))).thenReturn(null)
+        Mockito.verifyNoMoreInteractions(repository)
+
+        val result = underTest.update(A_NOT_EXISTING_POST_CATEGORY_UPDATE_REQUEST)
+
+        Assertions.assertThat(result).isEqualTo(PostUpdateError)
+    }
 
 
     companion object {
@@ -56,6 +75,8 @@ class BlogPostUpdateUseCaseTest {
                 "aCategory",
                 listOf("aTag", "anotherTag"))
 
+        private val AN_EXISTING_POST_CATEGORY_UPDATE_REQUEST = BlogPostCategoryUpdateRequest(BlogPostId(AN_EXISTING_POST_ID),"aNewCategory")
+        private val A_NOT_EXISTING_POST_CATEGORY_UPDATE_REQUEST = BlogPostCategoryUpdateRequest(BlogPostId(A_NOT_EXISTING_POST_ID),"aNewCategory")
         private val AN_EXISTING_POST_PARTIAL_UPDATE = BlogPostPartialUpdateRequest(BlogPostId(AN_EXISTING_POST_ID),"aNewTitle", null,null,null,null,null)
 
         private val AN_EXISTING_POST_UPDATED = PostUpdateSuccess("aNewTitle",
@@ -64,11 +85,23 @@ class BlogPostUpdateUseCaseTest {
                 "anImage",
                 "aCategory",
                 listOf("aTag", "anotherTag"))
+        private val AN_EXISTING_POST_WITH_CATEGORY_UPDATED = PostUpdateSuccess("aNewTitle",
+                "an amazong blog content updated",
+                "anAuthor",
+                "anImage",
+                "aNewCategory",
+                listOf("aTag", "anotherTag"))
         private val A_POST = BlogPost("aNewTitle",
                 "an amazong blog content updated",
                 "anAuthor",
                 "anImage",
                 "aCategory",
+                listOf("aTag", "anotherTag"))
+        private val A_POST_WITH_NEW_CATEGORY = BlogPost("aNewTitle",
+                "an amazong blog content updated",
+                "anAuthor",
+                "anImage",
+                "aNewCategory",
                 listOf("aTag", "anotherTag"))
     }
 }

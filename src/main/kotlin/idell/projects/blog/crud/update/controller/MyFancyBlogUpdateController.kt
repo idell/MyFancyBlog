@@ -5,12 +5,7 @@ import idell.projects.blog.crud.common.MyFancyBlogUserAuthenticator
 import idell.projects.blog.crud.update.usecase.*
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.PutMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestHeader
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
-
+import org.springframework.web.bind.annotation.*
 
 
 @RestController
@@ -52,6 +47,23 @@ class MyFancyBlogUpdateController(private val authenticator: MyFancyBlogUserAuth
             return ResponseEntity.badRequest().build()
         }
         val updateResult = blogPostUpdateUseCase.update(BlogPostPartialUpdateRequest(BlogPostId(id), title, content, author, image, category, tags))
+
+        return when (updateResult){
+            is PostUpdateSuccess ->  ResponseEntity.ok(PostUpdateSuccessResponse(updateResult.title,updateResult.content,updateResult.author,updateResult.image,updateResult.category,updateResult.tags))
+            is PostUpdateError -> ResponseEntity.internalServerError().build()
+        }
+
+    }
+    @PutMapping("/v1/posts/update-category/")
+    fun categoryUpdate(@RequestHeader("X-User") user: String,
+                   @RequestParam(required = true) id: Int,
+                   @RequestBody (required = true) category: String,
+    ): ResponseEntity<PostUpdateResponse> {
+        if (!authenticator.isAUser(user)) {
+            return ResponseEntity(HttpStatus.UNAUTHORIZED)
+        }
+
+        val updateResult = blogPostUpdateUseCase.update(BlogPostCategoryUpdateRequest(BlogPostId(id), category))
 
         return when (updateResult){
             is PostUpdateSuccess ->  ResponseEntity.ok(PostUpdateSuccessResponse(updateResult.title,updateResult.content,updateResult.author,updateResult.image,updateResult.category,updateResult.tags))

@@ -18,3 +18,5 @@ data class BlogPostPartialUpdateRequest(val postId: BlogPostId,
                                      val image: String?,
                                      val category: String?,
                                      val tags: List<String>?) : BlogPostUpdateRequest()
+data class BlogPostCategoryUpdateRequest(val postId: BlogPostId,
+                                     val category: String) : BlogPostUpdateRequest()

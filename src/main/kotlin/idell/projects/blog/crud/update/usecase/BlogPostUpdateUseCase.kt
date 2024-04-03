@@ -11,7 +11,15 @@ class BlogPostUpdateUseCase(private val repository: BlogPostRepository) {
         return when(blogPostUpdateRequest){
             is BlogPostFullUpdateRequest -> fullUpdate(blogPostUpdateRequest)
             is BlogPostPartialUpdateRequest -> partialUpdate(blogPostUpdateRequest)
+            is BlogPostCategoryUpdateRequest -> categoryUpdate(blogPostUpdateRequest)
         }
+    }
+
+    private fun categoryUpdate(blogPostUpdateRequest: BlogPostCategoryUpdateRequest): PostUpdateResult {
+        val previousPostVersion: BlogPost = repository.retrieve(blogPostUpdateRequest.postId) ?: return PostUpdateError
+        val updatedPost = previousPostVersion.copy(category = blogPostUpdateRequest.category)
+        repository.update(blogPostUpdateRequest.postId, updatedPost)
+        return PostUpdateSuccess(updatedPost.title,updatedPost.content,updatedPost.author,updatedPost.image,updatedPost.category,updatedPost.tags)
     }
 
     private fun partialUpdate(blogPostUpdateRequest: BlogPostPartialUpdateRequest): PostUpdateResult {

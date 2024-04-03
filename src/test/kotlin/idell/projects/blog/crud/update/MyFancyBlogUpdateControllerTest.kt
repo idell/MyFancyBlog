@@ -86,6 +86,22 @@ class MyFancyBlogUpdateControllerTest {
 
         Assertions.assertThat(actual).isEqualTo(ResponseEntity.internalServerError().build<Any>())
     }
+    @Test
+    fun `category update - will return 200 if post has been updated`() {
+        Mockito.`when`(blogPostUpdateUseCase.update(AN_EXISTING_POST_CATEGORY_UPDATE_REQUEST)).thenReturn(AN_EXISTING_POST_CATEGORY_UPDATED)
+
+        val actual = underTest.categoryUpdate("user", AN_EXISTING_POST_ID,  "aNewCategory")
+
+        Assertions.assertThat(actual).isEqualTo(ResponseEntity.ok(AN_EXISTING_POST_WITH_UPDATED_CATEGORY_RESPONSE))
+    }
+    @Test
+    fun `category update - will return 500 if update goes in error`() {
+        Mockito.`when`(blogPostUpdateUseCase.update(AN_EXISTING_POST_CATEGORY_UPDATE_REQUEST)).thenReturn(AN_EXISTING_POST_CATEGORY_UPDATED)
+
+        val actual = underTest.categoryUpdate("user", AN_EXISTING_POST_ID,  "aNewCategory")
+
+        Assertions.assertThat(actual).isEqualTo(ResponseEntity.ok(AN_EXISTING_POST_WITH_UPDATED_CATEGORY_RESPONSE))
+    }
 
     companion object {
         private const val A_TOO_LONG_CONTENT = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. " +
@@ -153,7 +169,21 @@ class MyFancyBlogUpdateControllerTest {
                 "anImage",
                 "aCategory",
                 listOf("aTag", "anotherTag"))
+        private val AN_EXISTING_POST_CATEGORY_UPDATE_REQUEST = BlogPostCategoryUpdateRequest(BlogPostId(AN_EXISTING_POST_ID),"aNewCategory")
 
+        private val AN_EXISTING_POST_WITH_UPDATED_CATEGORY_RESPONSE = PostUpdateSuccessResponse("aTitle",
+                "an amazong blog content updated",
+                "anAuthor",
+                "anImage",
+                "aNewCategory",
+                listOf("aTag", "anotherTag"))
+
+        private val AN_EXISTING_POST_CATEGORY_UPDATED = PostUpdateSuccess("aTitle",
+                "an amazong blog content updated",
+                "anAuthor",
+                "anImage",
+                "aNewCategory",
+                listOf("aTag", "anotherTag"))
 
     }
 }
